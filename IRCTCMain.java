@@ -1,5 +1,8 @@
+import entity.Train;
 import service.AuthService;
+import service.TrainDataLoader;
 
+import java.util.Map;
 import java.util.Scanner;
 
 public class IRCTCMain {
@@ -9,7 +12,14 @@ public class IRCTCMain {
     public static void main(String[] args) {
         System.out.println("Welcome to IRCTC V1");
         AuthService authService = new AuthService();
+        Map<String, Train> trainData = TrainDataLoader.loadTrainData();
 
+        // Example: Print train details
+        trainData.forEach((trainNumber, train) -> {
+            System.out.println("Train Number: " + trainNumber);
+            System.out.println("Train Name: " + train.getTrainName());
+            System.out.println("Route: " + train.getRoute());
+        });
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
