@@ -28,7 +28,7 @@ public class TrainDataLoader {
         trainData.put(train1.getTrainNumber(), train1);
 
         // Train 2
-        Map<String, LocalTime> route2 = new HashMap<>();
+        Map<String, LocalTime> route2 = new LinkedHashMap<>();
         route2.put("Lahore", LocalTime.of(19, 0));
         route2.put("Kashmir", LocalTime.of(21, 0));
         route2.put("Delhi", LocalTime.of(0, 0));
