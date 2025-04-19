@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class IrctcUser {
@@ -9,7 +10,9 @@ public class IrctcUser {
     private String password;
     private List<Ticket> bookedTickets;
 
+
     public IrctcUser(Long userId, String username, String password) {
+        this.bookedTickets = new ArrayList<>();
         this.userId = userId;
         this.username = username;
         this.password = password;

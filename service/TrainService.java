@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class TrainService {
 
-    public List<Train> searchTrains(String source, String destination, TrainDataLoader trainDataLoader) {
+    public static List<Train> searchTrains(String source, String destination, TrainDataLoader trainDataLoader) {
         // Logic to search for trains based on source, destination
         // This will involve checking the train data loaded from TrainDataLoader
 
