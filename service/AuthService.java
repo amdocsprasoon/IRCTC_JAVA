@@ -1,33 +1,34 @@
 package service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import entity.IrctcUser;
+
+import java.util.*;
 
 public class AuthService {
 
     // This is a simple in-memory user store for demonstration purposes
-    private Map<String, String> users = new HashMap<>();
+    List<IrctcUser> users = new ArrayList<>();
 
     public AuthService(){
         // Pre-populate with a default user for testing
-        users.put("admin", "password");
+        users.add(new IrctcUser(201L, "admin", "password"));
+        users.add(new IrctcUser(202L, "seb", "jabba"));
     }
     public void signup(Scanner scanner) {
         System.out.print("Enter a username: ");
         String username = scanner.nextLine();
-        if (users.containsKey(username)) {
+        if (users.stream().map(IrctcUser::getUsername).anyMatch(existingUsername -> existingUsername.equals(username))) {
             System.out.println("Username already exists. Please try a different one.");
             return;
         }
         System.out.print("Enter a password: ");
         String password = scanner.nextLine();
-        users.put(username, password);
+        users.add(new IrctcUser((users.get(users.size()-1)).getUserId() + 1, username, password));
         System.out.println("Signup successful!");
     }
 
     // This class handles user authentication and authorization
-    public boolean login(Scanner scanner) {
+    public IrctcUser login(Scanner scanner) {
         // Logic to authenticate user
         // This is a placeholder for actual authentication logic
         System.out.print("Enter your username: ");
@@ -35,12 +36,17 @@ public class AuthService {
         System.out.print("Enter your password: ");
         String password = scanner.nextLine();
 
-        if (users.containsKey(username) && users.get(username).equals(password)) {
+        Optional<IrctcUser> user = users.stream()
+                .filter(u -> u.getUsername().equals(username) && u.getPassword().equals(password))
+                .findFirst();
+
+        if (user.isPresent())
+        {
             System.out.println("Login successful! Welcome, " + username + "!");
-            return true;
+            return user.get();
         } else {
             System.out.println("Invalid username or password. Please try again.");
-            return false;
+            return null;
         }
     }
 

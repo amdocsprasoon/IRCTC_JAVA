@@ -1,3 +1,4 @@
+import entity.IrctcUser;
 import entity.Train;
 import service.AuthService;
 import service.TrainDataLoader;
@@ -7,15 +8,14 @@ import java.util.Scanner;
 
 public class IRCTCMain {
 
-
-
     public static void main(String[] args) {
         System.out.println("Welcome to IRCTC V1");
         AuthService authService = new AuthService();
-        Map<String, Train> trainData = TrainDataLoader.loadTrainData();
+        TrainDataLoader trainDataLoader = new TrainDataLoader();
+
 
         // Example: Print train details
-        trainData.forEach((trainNumber, train) -> {
+        trainDataLoader.getTrainData().forEach((trainNumber, train) -> {
             System.out.println("Train Number: " + trainNumber);
             System.out.println("Train Name: " + train.getTrainName());
             System.out.println("Route: " + train.getRoute());
@@ -35,8 +35,9 @@ public class IRCTCMain {
                     authService.signup(scanner);
                     break;
                 case 2:
-                    if (authService.login(scanner)) {
-                        showPostLoginMenu(scanner);
+                    IrctcUser user = authService.login(scanner);
+                    if (user!=null) {
+                        showPostLoginMenu(scanner, trainDataLoader,user);
                     }
                     break;
                 case 3:
@@ -49,7 +50,7 @@ public class IRCTCMain {
         }
     }
 
-    private static void showPostLoginMenu(Scanner scanner) {
+    private static void showPostLoginMenu(Scanner scanner, TrainDataLoader trainDataLoader, IrctcUser irctcUser) {
         while (true) {
             System.out.println("\nPost-Login Menu:");
             System.out.println("1. View Profile");

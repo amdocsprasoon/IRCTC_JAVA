@@ -9,6 +9,12 @@ public class IrctcUser {
     private String password;
     private List<Ticket> bookedTickets;
 
+    public IrctcUser(Long userId, String username, String password) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+    }
+
     public Long getUserId() {
         return userId;
     }
