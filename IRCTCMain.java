@@ -1,5 +1,67 @@
+import service.AuthService;
+
+import java.util.Scanner;
+
 public class IRCTCMain {
+
+
+
     public static void main(String[] args) {
         System.out.println("Welcome to IRCTC V1");
+        AuthService authService = new AuthService();
+
+
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("\n1. Signup");
+            System.out.println("2. Login");
+            System.out.println("3. Exit");
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    authService.signup(scanner);
+                    break;
+                case 2:
+                    if (authService.login(scanner)) {
+                        showPostLoginMenu(scanner);
+                    }
+                    break;
+                case 3:
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    private static void showPostLoginMenu(Scanner scanner) {
+        while (true) {
+            System.out.println("\nPost-Login Menu:");
+            System.out.println("1. View Profile");
+            System.out.println("2. Book Ticket");
+            System.out.println("3. Logout");
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Viewing profile... (Feature not implemented yet)");
+                    break;
+                case 2:
+                    System.out.println("Booking ticket... (Feature not implemented yet)");
+                    break;
+                case 3:
+                    System.out.println("Logging out...");
+                    return; // Exit the post-login menu
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
     }
 }
